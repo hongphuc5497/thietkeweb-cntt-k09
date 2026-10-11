@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Phiếu Bình Chọn Danh Hiệu Thi Đua</title>
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				background-color: #ffffff;
+				color: #000000;
+				padding: 20px;
+				line-height: 1.4;
+				font-size: 14px;
+			}
+
+			.container {
+				max-width: 1100px;
+				margin: 0 auto;
+				background-color: #ffffff;
+				padding: 20px;
+			}
+
+			.header-top {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 15px;
+			}
+
+			.header-top-left {
+				font-weight: bold;
+			}
+
+			.title-container {
+				text-align: center;
+				margin-bottom: 15px;
+			}
+
+			.title-container h1 {
+				font-size: 18px;
+				font-weight: bold;
+				margin-bottom: 5px;
+			}
+
+			.school-year {
+				font-size: 14px;
+			}
+
+			.school-year input {
+				width: 80px;
+				padding: 2px 5px;
+				border: 1px solid #ccc;
+				text-align: center;
+			}
+
+			.voter-info {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 15px;
+				align-items: center;
+			}
+
+			.voter-info input {
+				padding: 5px;
+				border: 1px solid #ccc;
+			}
+
+			.voter-name-input {
+				width: 450px;
+			}
+
+			.voter-date-input {
+				width: 120px;
+			}
+
+			.instructions {
+				font-style: italic;
+				margin-bottom: 10px;
+			}
+
+			.action-buttons {
+				display: flex;
+				gap: 8px;
+				margin-bottom: 15px;
+			}
+
+			.btn {
+				padding: 6px 12px;
+				border: none;
+				border-radius: 4px;
+				color: #ffffff;
+				font-weight: bold;
+				cursor: pointer;
+				font-size: 13px;
+			}
+
+			.btn:disabled {
+				background-color: #cccccc !important;
+				color: #666666 !important;
+				cursor: not-allowed;
+				opacity: 0.7;
+			}
+
+			.btn-add {
+				background-color: #2e7d32;
+			}
+
+			.btn-excel {
+				background-color: #388e3c;
+			}
+
+			.btn-print {
+				background-color: #1976d2;
+			}
+
+			.btn-delete-all {
+				background-color: #d32f2f;
+			}
+
+			.btn-delete {
+				background-color: #d32f2f;
+				padding: 4px 8px;
+				font-size: 12px;
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-bottom: 25px;
+			}
+
+			th,
+			td {
+				border: 1px solid #000000;
+				padding: 8px;
+				text-align: center;
+				vertical-align: middle;
+			}
+
+			th {
+				background-color: #f2f2f2;
+				font-weight: bold;
+			}
+
+			.text-left {
+				text-align: left;
+			}
+
+			.table-input {
+				width: 100%;
+				padding: 6px;
+				border: 1px solid #ccc;
+				font-family: inherit;
+				font-size: 13px;
+			}
+
+			.section-title {
+				text-align: center;
+				font-weight: bold;
+				font-size: 16px;
+				margin: 20px 0 10px 0;
+			}
+
+			.note {
+				font-style: italic;
+				font-size: 13px;
+				margin-bottom: 30px;
+			}
+
+			.signature-container {
+				display: flex;
+				justify-content: space-between;
+				margin-top: 20px;
+			}
+
+			.signature-box {
+				text-align: center;
+				width: 40%;
+			}
+
+			.signature-title {
+				font-weight: bold;
+				margin-bottom: 50px;
+			}
+
+			.signature-date {
+				font-style: italic;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header-top">
+				<div class="header-top-left">
+					TRƯỜNG ....................................................<br />
+					TỔ/ĐƠN VỊ: ...............................................
+				</div>
+			</div>
+
+			<div class="title-container">
+				<h1>PHIẾU BÌNH CHỌN DANH HIỆU THI ĐUA</h1>
+				<div class="school-year">
+					Năm học: <input type="text" value="2025" /> -
+					<input type="text" value="2026" />
+				</div>
+			</div>
+
+			<div class="voter-info">
+				<div>
+					Người bình chọn:
+					<input
+						type="text"
+						class="voter-name-input"
+						placeholder="Nhập tên người bình chọn"
+					/>
+				</div>
+				<div>
+					Ngày bình chọn:
+					<input type="text" class="voter-date-input" value="10/11/2026" />
+				</div>
+			</div>
+
+			<div class="instructions">
+				Hướng dẫn: Đánh dấu (✔) vào ô tương ứng với danh hiệu đề nghị cho từng
+				cá nhân.
+			</div>
+
+			<div class="action-buttons">
+				<button type="button" class="btn btn-add" onclick="addRow()">
+					+ Thêm cán bộ/giáo viên
+				</button>
+				<button
+					type="button"
+					class="btn btn-excel"
+					onclick="exportExcel()"
+					disabled
+				>
+					📊 Lưu kết quả Excel
+				</button>
+				<button
+					type="button"
+					class="btn btn-print"
+					onclick="window.print()"
+					disabled
+				>
+					🖨️ In phiếu
+				</button>
+				<button
+					type="button"
+					class="btn btn-delete-all"
+					onclick="deleteAllRows()"
+					disabled
+				>
+					🗑️ Xóa toàn bộ
+				</button>
+			</div>
+
+			<table id="votingTable">
+				<thead>
+					<tr>
+						<th rowspan="2" style="width: 50px">STT</th>
+						<th rowspan="2" style="width: 25%">Họ và tên</th>
+						<th rowspan="2" style="width: 25%">Chức vụ / Tổ chuyên môn</th>
+						<th colspan="2">Danh hiệu bình chọn</th>
+						<th rowspan="2" style="width: 70px">Xóa</th>
+					</tr>
+					<tr>
+						<th style="width: 110px">Chiến sĩ thi đua</th>
+						<th style="width: 110px">Lao động tiên tiến</th>
+					</tr>
+				</thead>
+				<tbody id="votingBody">
+					<tr>
+						<td>1</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Nhập họ và tên"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Chức vụ / Tổ chuyên môn"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_1"
+								value="Chiến sĩ thi đua"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_1"
+								value="Lao động tiên tiến"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<button
+								type="button"
+								class="btn btn-delete"
+								onclick="deleteRow(this)"
+							>
+								Xóa
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Nhập họ và tên"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Chức vụ / Tổ chuyên môn"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_2"
+								value="Chiến sĩ thi đua"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_2"
+								value="Lao động tiên tiến"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<button
+								type="button"
+								class="btn btn-delete"
+								onclick="deleteRow(this)"
+							>
+								Xóa
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Nhập họ và tên"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Chức vụ / Tổ chuyên môn"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_3"
+								value="Chiến sĩ thi đua"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_3"
+								value="Lao động tiên tiến"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<button
+								type="button"
+								class="btn btn-delete"
+								onclick="deleteRow(this)"
+							>
+								Xóa
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Nhập họ và tên"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Chức vụ / Tổ chuyên môn"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_4"
+								value="Chiến sĩ thi đua"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_4"
+								value="Lao động tiên tiến"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<button
+								type="button"
+								class="btn btn-delete"
+								onclick="deleteRow(this)"
+							>
+								Xóa
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Nhập họ và tên"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="text"
+								class="table-input"
+								placeholder="Chức vụ / Tổ chuyên môn"
+								oninput="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_5"
+								value="Chiến sĩ thi đua"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<input
+								type="radio"
+								name="award_5"
+								value="Lao động tiên tiến"
+								onchange="updateSummary()"
+							/>
+						</td>
+						<td>
+							<button
+								type="button"
+								class="btn btn-delete"
+								onclick="deleteRow(this)"
+							>
+								Xóa
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="section-title">TỔNG HỢP KẾT QUẢ BÌNH CHỌN</div>
+
+			<table id="summaryTable">
+				<thead>
+					<tr>
+						<th style="width: 50px">STT</th>
+						<th style="width: 25%">Họ và tên</th>
+						<th style="width: 25%">Chức vụ / Tổ chuyên môn</th>
+						<th style="width: 15%">Chiến sĩ thi đua</th>
+						<th style="width: 15%">Lao động tiên tiến</th>
+						<th style="width: 20%">Kết quả đề nghị</th>
+					</tr>
+				</thead>
+				<tbody id="summaryBody"></tbody>
+			</table>
+
+			<div class="note">
+				Ghi chú: Kết quả bình chọn là cơ sở để tổ/đơn vị xem xét, đề nghị danh
+				hiệu thi đua theo quy định hiện hành.
+			</div>
+
+			<div class="signature-container">
+				<div class="signature-box">
+					<div class="signature-title">NGƯỜI BÌNH CHỌN</div>
+				</div>
+				<div class="signature-box">
+					<div class="signature-date">
+						........., ngày ...... tháng ...... năm ..........
+					</div>
+					<div class="signature-title">NGƯỜI CHỦ TRÌ</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			let rowCount = 5;
+
+			function updateSummary() {
+				const votingBody = document.getElementById('votingBody');
+				const summaryBody = document.getElementById('summaryBody');
+				const rows = votingBody.getElementsByTagName('tr');
+
+				summaryBody.innerHTML = '';
+
+				for (let i = 0; i < rows.length; i++) {
+					const nameInput = rows[i].cells[1]
+						.getElementsByTagName('input')[0]
+						.value.trim();
+					const positionInput = rows[i].cells[2]
+						.getElementsByTagName('input')[0]
+						.value.trim();
+					const radios = rows[i].cells[3].getElementsByTagName('input')[0];
+					const radios2 = rows[i].cells[4].getElementsByTagName('input')[0];
+
+					const summaryRow = document.createElement('tr');
+
+					const sttCell = document.createElement('td');
+					sttCell.textContent = i + 1;
+					summaryRow.appendChild(sttCell);
+
+					const nameCell = document.createElement('td');
+					nameCell.className = 'text-left';
+					nameCell.style.paddingLeft = '10px';
+					nameCell.textContent = nameInput;
+					summaryRow.appendChild(nameCell);
+
+					const positionCell = document.createElement('td');
+					positionCell.className = 'text-left';
+					positionCell.style.paddingLeft = '10px';
+					positionCell.textContent = positionInput;
+					summaryRow.appendChild(positionCell);
+
+					const cstdCell = document.createElement('td');
+					cstdCell.textContent = radios.checked ? '✔' : '';
+					summaryRow.appendChild(cstdCell);
+
+					const ldttCell = document.createElement('td');
+					ldttCell.textContent = radios2.checked ? '✔' : '';
+					summaryRow.appendChild(ldttCell);
+
+					const resultCell = document.createElement('td');
+					if (radios.checked) {
+						resultCell.textContent = 'Chiến sĩ thi đua';
+					} else if (radios2.checked) {
+						resultCell.textContent = 'Lao động tiên tiến';
+					} else {
+						resultCell.textContent = 'Chưa bình chọn';
+					}
+					summaryRow.appendChild(resultCell);
+
+					summaryBody.appendChild(summaryRow);
+				}
+			}
+
+			function addRow() {
+				rowCount++;
+				const votingBody = document.getElementById('votingBody');
+				const newRow = document.createElement('tr');
+
+				newRow.innerHTML = `
+        <td>${rowCount}</td>
+        <td><input type="text" class="table-input" placeholder="Nhập họ và tên" oninput="updateSummary()"></td>
+        <td><input type="text" class="table-input" placeholder="Chức vụ / Tổ chuyên môn" oninput="updateSummary()"></td>
+        <td><input type="radio" name="award_${rowCount}" value="Chiến sĩ thi đua" onchange="updateSummary()"></td>
+        <td><input type="radio" name="award_${rowCount}" value="Lao động tiên tiến" onchange="updateSummary()"></td>
+        <td><button type="button" class="btn btn-delete" onclick="deleteRow(this)">Xóa</button></td>
+      `;
+
+				votingBody.appendChild(newRow);
+				reindexRows();
+				updateSummary();
+			}
+
+			function deleteRow(button) {
+				const row = button.parentNode.parentNode;
+				row.parentNode.removeChild(row);
+				reindexRows();
+				updateSummary();
+			}
+
+			function deleteAllRows() {
+				document.getElementById('votingBody').innerHTML = '';
+				rowCount = 0;
+				updateSummary();
+			}
+
+			function reindexRows() {
+				const rows = document
+					.getElementById('votingBody')
+					.getElementsByTagName('tr');
+				for (let i = 0; i < rows.length; i++) {
+					rows[i].cells[0].textContent = i + 1;
+				}
+				rowCount = rows.length;
+			}
+
+			function exportExcel() {
+				alert('Đã xuất kết quả sang tệp Excel thành công!');
+			}
+
+			window.onload = updateSummary;
+		</script>
+	</body>
+</html>
