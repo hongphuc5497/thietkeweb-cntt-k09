@@ -3,23 +3,20 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Dang Tran Hong Phuc - CNTT K09</title>
+		<title>Đặng Trần Hồng Phúc - CNTT K09</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
 		<style>
-			/* Bảng màu 8-bit */
 			:root {
-				--troi: #5c94fc;
-				--den: #000000;
-				--trang: #fcfcfc;
-				--cua-so: #1c1c64;
-				--vang: #f8d838;
-				--do: #e83c28;
-				--cam: #fc9838;
-				--xanh-la: #58c838;
-				--xanh-ngoc: #00a8a8;
-				--tim: #9c4cfc;
+				--troi: #ffd6b8;
+				--vien: #3b3355;
+				--trang: #ffffff;
+				--tim-nhat: #e3d7ff;
+				--hong-nhat: #ffd9e8;
+				--xanh-nhat: #d4f5e4;
+				--vang-nhat: #fff3a6;
+				--hong-dam: #c2346f;
 			}
 
 			* {
@@ -32,7 +29,7 @@
 				font-family: 'VT323', 'Courier New', monospace;
 				font-size: 22px;
 				line-height: 1.3;
-				color: var(--trang);
+				color: var(--vien);
 				background-color: var(--troi);
 			}
 
@@ -46,7 +43,7 @@
 			}
 
 			a:focus-visible {
-				outline: 3px dashed var(--vang);
+				outline: 3px dashed var(--hong-dam);
 				outline-offset: 2px;
 			}
 
@@ -56,7 +53,6 @@
 				padding: 0 20px;
 			}
 
-			/* Đầu trang */
 			.header {
 				padding: 24px 0 8px;
 			}
@@ -66,14 +62,24 @@
 				font-size: 52px;
 				line-height: 1;
 				color: var(--trang);
-				text-shadow: 4px 4px 0 var(--den);
+				text-shadow: 4px 4px 0 var(--vien);
 				margin-bottom: 20px;
 			}
 
-			/* Menu ngang: mỗi mục là một khối màu */
+			.menu-ngang,
+			.menu-con,
+			.sidebar,
+			.content {
+				background-color: var(--tim-nhat);
+				border: 4px solid var(--trang);
+				box-shadow:
+					0 0 0 4px var(--vien),
+					6px 6px 0 4px var(--vien);
+			}
+
 			.menu-ngang {
 				display: flex;
-				gap: 12px;
+				padding: 6px 4px;
 			}
 
 			.menu-ngang > li {
@@ -81,39 +87,33 @@
 				flex: 1;
 			}
 
-			.menu-ngang > li:nth-child(1) { --mau: var(--do);        --chu: var(--trang); }
-			.menu-ngang > li:nth-child(2) { --mau: var(--cam);       --chu: var(--den); }
-			.menu-ngang > li:nth-child(3) { --mau: var(--vang);      --chu: var(--den); }
-			.menu-ngang > li:nth-child(4) { --mau: var(--xanh-la);   --chu: var(--den); }
-			.menu-ngang > li:nth-child(5) { --mau: var(--xanh-ngoc); --chu: var(--trang); }
-			.menu-ngang > li:nth-child(6) { --mau: var(--tim);       --chu: var(--trang); }
-
 			.menu-ngang > li > a {
 				display: block;
 				text-align: center;
-				padding: 10px 6px;
-				background-color: var(--mau);
-				color: var(--chu);
-				border: 4px solid var(--den);
-				box-shadow:
-					inset 4px 4px 0 rgba(255, 255, 255, 0.4),
-					inset -4px -4px 0 rgba(0, 0, 0, 0.25),
-					4px 4px 0 var(--den);
+				padding: 4px 6px;
+				white-space: nowrap;
 			}
 
-			/* Nhấn xuống như nút bấm */
+			.menu-ngang > li > a::before {
+				content: '\25B6';
+				display: inline-block;
+				width: 20px;
+				font-size: 14px;
+				vertical-align: middle;
+				visibility: hidden;
+			}
+
 			.menu-ngang > li:hover > a,
-			.menu-ngang > li:focus-within > a {
-				transform: translate(2px, 2px);
-				box-shadow:
-					inset 4px 4px 0 rgba(255, 255, 255, 0.4),
-					inset -4px -4px 0 rgba(0, 0, 0, 0.25),
-					2px 2px 0 var(--den);
+			.menu-ngang > li:focus-within > a,
+			.menu-ngang > li > a.active {
+				color: var(--hong-dam);
+				background-color: var(--vang-nhat);
 			}
 
-			.menu-ngang > li > a.active {
-				outline: 4px solid var(--trang);
-				outline-offset: -10px;
+			.menu-ngang > li:hover > a::before,
+			.menu-ngang > li:focus-within > a::before,
+			.menu-ngang > li > a.active::before {
+				visibility: visible;
 			}
 
 			.mui-ten {
@@ -122,22 +122,10 @@
 				vertical-align: middle;
 			}
 
-			/* Cửa sổ kiểu game: dùng cho menu thả xuống, menu dọc, nội dung */
-			.menu-con,
-			.sidebar,
-			.content {
-				background-color: var(--cua-so);
-				border: 4px solid var(--trang);
-				box-shadow:
-					0 0 0 4px var(--den),
-					6px 6px 0 4px var(--den);
-			}
-
-			/* Menu thả xuống */
 			.menu-con {
 				display: none;
 				position: absolute;
-				top: calc(100% + 14px);
+				top: calc(100% + 18px);
 				left: 0;
 				min-width: 100%;
 				white-space: nowrap;
@@ -145,14 +133,13 @@
 				z-index: 10;
 			}
 
-			/* Vùng đệm để rê chuột từ menu xuống không bị mất */
 			.menu-ngang > li > .menu-con::before {
 				content: '';
 				position: absolute;
 				left: 0;
 				right: 0;
-				top: -22px;
-				height: 22px;
+				top: -26px;
+				height: 26px;
 			}
 
 			.menu-ngang > li:hover > .menu-con,
@@ -171,7 +158,6 @@
 				padding: 4px 18px 4px 32px;
 			}
 
-			/* Con trỏ chọn ▶ như trong game */
 			.menu-con a::before,
 			.menu-doc a::before {
 				content: '\25B6';
@@ -185,21 +171,23 @@
 
 			.menu-con li:hover > a,
 			.menu-con a:focus-visible,
+			.menu-doc li:hover > a,
 			.menu-doc a:hover,
 			.menu-doc a:focus-visible,
 			.menu-doc a.active {
-				color: var(--vang);
+				color: var(--hong-dam);
+				background-color: var(--vang-nhat);
 			}
 
 			.menu-con li:hover > a::before,
 			.menu-con a:focus-visible::before,
+			.menu-doc li:hover > a::before,
 			.menu-doc a:hover::before,
 			.menu-doc a:focus-visible::before,
 			.menu-doc a.active::before {
 				visibility: visible;
 			}
 
-			/* Menu cấp 3 */
 			.menu-con .menu-con {
 				top: -10px;
 				left: calc(100% + 8px);
@@ -211,6 +199,30 @@
 				display: block;
 			}
 
+			.menu-doc li {
+				position: relative;
+			}
+
+			.menu-doc .menu-con {
+				top: -10px;
+				left: calc(100% + 18px);
+				min-width: 180px;
+			}
+
+			.menu-doc .menu-con::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: -30px;
+				width: 30px;
+			}
+
+			.menu-doc li:hover > .menu-con,
+			.menu-doc li:focus-within > .menu-con {
+				display: block;
+			}
+
 			.mui-ten-phai {
 				float: right;
 				font-size: 14px;
@@ -218,7 +230,6 @@
 				line-height: 29px;
 			}
 
-			/* Bố cục chính */
 			.main {
 				display: flex;
 				gap: 28px;
@@ -226,31 +237,32 @@
 				padding-bottom: 40px;
 			}
 
-			/* Menu dọc */
 			.sidebar {
 				width: 240px;
 				flex-shrink: 0;
 				padding: 12px 6px;
+				background-color: var(--hong-nhat);
 			}
 
 			.sidebar h2 {
 				font-size: 26px;
 				font-weight: normal;
-				color: var(--vang);
+				color: var(--hong-dam);
 				padding: 0 10px 8px;
 				margin-bottom: 8px;
-				border-bottom: 4px dotted var(--trang);
+				border-bottom: 4px dotted var(--vien);
 			}
 
 			.content {
 				flex: 1;
 				padding: 18px 26px;
+				background-color: var(--xanh-nhat);
 			}
 
 			.content h1 {
 				font-size: 38px;
 				font-weight: normal;
-				color: var(--vang);
+				color: var(--hong-dam);
 				margin-bottom: 12px;
 			}
 
@@ -261,12 +273,11 @@
 
 			.footer {
 				text-align: center;
-				color: var(--trang);
-				text-shadow: 2px 2px 0 var(--den);
+				color: var(--vien);
+				text-shadow: 2px 2px 0 var(--trang);
 				padding: 0 0 28px;
 			}
 
-			/* Màn hình nhỏ */
 			@media (max-width: 640px) {
 				.logo {
 					font-size: 40px;
@@ -274,17 +285,15 @@
 
 				.menu-ngang {
 					flex-wrap: wrap;
-					gap: 12px 10px;
 				}
 
 				.menu-ngang > li {
-					flex: 1 1 30%;
+					flex: 1 1 33.33%;
 				}
 
 				.menu-ngang > li > a {
 					font-size: 20px;
-					padding: 8px 2px;
-					white-space: nowrap;
+					padding: 4px 2px;
 				}
 
 				.menu-ngang > li:nth-child(3n) > .menu-con {
@@ -292,11 +301,16 @@
 					right: 0;
 				}
 
-				.menu-con .menu-con {
+				.menu-con .menu-con,
+				.menu-doc .menu-con {
 					position: static;
 					box-shadow: none;
 					border: none;
 					padding: 0 0 0 16px;
+				}
+
+				.menu-doc .menu-con::before {
+					display: none;
 				}
 
 				.main {
@@ -312,10 +326,10 @@
 	<body>
 		<header class="header">
 			<div class="wrap">
-				<a href="#" class="logo">Cửa hàng ABC</a>
+				<a href="#" class="logo">Đặng Trần Hồng Phúc - CNTT K09</a>
 
 				<ul class="menu-ngang">
-					<li><a href="#" class="active">Trang chủ</a></li>
+					<li><a href="#">Trang chủ</a></li>
 					<li><a href="#">Giới thiệu</a></li>
 					<li>
 						<a href="#">Sản phẩm<span class="mui-ten">&#9660;</span></a>
@@ -342,54 +356,133 @@
 							<li><a href="#">Bảo hành</a></li>
 							<li><a href="#">Sửa chữa</a></li>
 							<li><a href="#">Giao hàng</a></li>
-							<li>
-								<a href="#">Hỗ trợ<span class="mui-ten-phai">&#9654;</span></a>
-								<ul class="menu-con">
-									<li><a href="#">Hỗ trợ trực tuyến</a></li>
-									<li><a href="#">Tổng đài</a></li>
-									<li><a href="#">Câu hỏi thường gặp</a></li>
-								</ul>
-							</li>
+							<li><a href="#">Hỗ trợ</a></li>
 							<li><a href="#">Chính sách đổi trả</a></li>
 						</ul>
 					</li>
-					<li><a href="#">Tin tức</a></li>
-					<li><a href="#">Liên hệ</a></li>
+					<li><a href="https://news.google.com/home?hl=vi&amp;gl=VN&amp;ceid=VN:vi" target="_blank" rel="noopener">Tin tức</a></li>
+					<li><a href="https://www.google.com/maps" target="_blank" rel="noopener">Liên hệ</a></li>
 				</ul>
 			</div>
 		</header>
 
 		<div class="wrap main">
 			<aside class="sidebar">
-				<h2>Danh mục</h2>
+				<h2>Sản phẩm</h2>
 				<ul class="menu-doc">
 					<li><a href="#" class="active">Điện thoại</a></li>
 					<li><a href="#">Máy tính xách tay</a></li>
 					<li><a href="#">Máy tính bảng</a></li>
-					<li><a href="#">Đồng hồ thông minh</a></li>
-					<li><a href="#">Tai nghe</a></li>
 					<li><a href="#">Phụ kiện</a></li>
+          <li>
+            <a href="#">Thương hiệu<span class="mui-ten-phai">&#9654;</span></a>
+            <ul class="menu-con">
+              <li><a href="#">Apple</a></li>
+              <li><a href="#">Samsung</a></li>
+              <li><a href="#">Xiaomi</a></li>
+              <li><a href="#">OPPO</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Khuyến mãi</a></li>
 				</ul>
 			</aside>
 
 			<main class="content">
 				<h1>Điện thoại</h1>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-					incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-					exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-				</p>
-				<p>
-					Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-					fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-					culpa qui officia deserunt mollit anim id est laborum.
-				</p>
-				<p>
-					Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-					doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-					veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-				</p>
+				<div class="mo-ta">
+					<p>
+						Điện thoại di động là thiết bị liên lạc cầm tay, cho phép gọi điện và nhắn tin
+						mà không cần dây nối.
+					</p>
+					<p>
+						Điện thoại thông minh (smartphone) ngày nay còn truy cập được Internet, chụp ảnh,
+						xem video và cài đặt ứng dụng, giống như một chiếc máy tính thu nhỏ.
+					</p>
+				</div>
 			</main>
 		</div>
+
+		<footer class="footer">Bài tập Thiết kế web - Menu Ngang, Dọc và Dropdown</footer>
+
+		<script>
+			const noiDung = {
+				'Điện thoại': [
+					'Điện thoại di động là thiết bị liên lạc cầm tay, cho phép gọi điện và nhắn tin mà không cần dây nối.',
+					'Điện thoại thông minh (smartphone) ngày nay còn truy cập được Internet, chụp ảnh, xem video và cài đặt ứng dụng, giống như một chiếc máy tính thu nhỏ.'
+				],
+				'Máy tính xách tay': [
+					'Máy tính xách tay (laptop) là máy tính cá nhân nhỏ gọn, có màn hình, bàn phím, bàn di chuột và pin trong cùng một thân máy.',
+					'Nhờ thiết kế gọn nhẹ, người dùng có thể mang máy theo để học tập và làm việc ở bất cứ đâu.'
+				],
+				'Máy tính bảng': [
+					'Máy tính bảng (tablet) là thiết bị di động có màn hình cảm ứng lớn, thường từ 7 đến 13 inch, điều khiển chủ yếu bằng ngón tay hoặc bút cảm ứng.',
+					'Máy tính bảng phù hợp để đọc sách, xem phim, ghi chú và học trực tuyến.'
+				],
+				'Phụ kiện': [
+					'Phụ kiện là các sản phẩm đi kèm giúp thiết bị chính được sử dụng tiện lợi và an toàn hơn.',
+					'Một số phụ kiện phổ biến: ốp lưng, miếng dán màn hình, bộ sạc, cáp kết nối, tai nghe và pin dự phòng.'
+				],
+				'Thương hiệu': [
+					'Thương hiệu là tên gọi, biểu tượng hoặc dấu hiệu giúp người mua nhận biết và phân biệt sản phẩm của công ty này với công ty khác.',
+					'Cửa hàng hiện bán sản phẩm của các thương hiệu Apple, Samsung, Xiaomi và OPPO.'
+				],
+				'Apple': [
+					'Apple là tập đoàn công nghệ của Mỹ, do Steve Jobs, Steve Wozniak và Ronald Wayne thành lập năm 1976, trụ sở đặt tại Cupertino, California.',
+					'Các sản phẩm nổi bật của Apple gồm điện thoại iPhone, máy tính bảng iPad, máy tính Mac và đồng hồ Apple Watch.'
+				],
+				'Samsung': [
+					'Samsung là tập đoàn đa ngành của Hàn Quốc, do ông Lee Byung-chul thành lập năm 1938.',
+					'Công ty con Samsung Electronics là một trong những nhà sản xuất điện thoại lớn nhất thế giới, nổi tiếng với dòng sản phẩm Galaxy.'
+				],
+				'Xiaomi': [
+					'Xiaomi là công ty công nghệ của Trung Quốc, do Lôi Quân (Lei Jun) thành lập năm 2010 tại Bắc Kinh.',
+					'Xiaomi được biết đến với điện thoại có cấu hình tốt trong tầm giá, cùng nhiều thiết bị gia dụng thông minh.'
+				],
+				'OPPO': [
+					'OPPO là thương hiệu điện tử của Trung Quốc, thành lập năm 2004, trụ sở tại Đông Quan, tỉnh Quảng Đông.',
+					'OPPO tập trung vào điện thoại thông minh, đặc biệt chú trọng camera và thiết kế, với các dòng Find và Reno.'
+				],
+				'Khuyến mãi': [
+					'Khuyến mãi là hoạt động giảm giá, tặng quà hoặc ưu đãi mà người bán dành cho khách hàng trong một thời gian nhất định.',
+					'Mục đích của khuyến mãi là giúp khách hàng mua sắm tiết kiệm hơn và thúc đẩy việc bán hàng.'
+				]
+			};
+
+			const title = document.querySelector('.content h1');
+			const moTa = document.querySelector('.content .mo-ta');
+			const sideLinks = document.querySelectorAll('.menu-doc a');
+			const topLinks = document.querySelectorAll('.menu-ngang > li > a');
+			const sanPham = topLinks[2];
+
+			function hienThi(link) {
+				const ten = link.firstChild.textContent.trim();
+				title.textContent = ten;
+				moTa.innerHTML = '';
+				noiDung[ten].forEach(function (doan) {
+					const p = document.createElement('p');
+					p.textContent = doan;
+					moTa.appendChild(p);
+				});
+			}
+
+			function boChon() {
+				sideLinks.forEach(function (item) {
+					item.classList.remove('active');
+				});
+				topLinks.forEach(function (item) {
+					item.classList.remove('active');
+				});
+			}
+
+			sideLinks.forEach(function (link) {
+				link.addEventListener('click', function (event) {
+					event.preventDefault();
+					boChon();
+					link.classList.add('active');
+					sanPham.classList.add('active');
+					hienThi(link);
+				});
+			});
+		</script>
 	</body>
 </html>
