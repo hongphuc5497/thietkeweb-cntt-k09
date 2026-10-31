@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Header VnExpress - CNTT K09</title>
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 14px;
+				color: #222222;
+				background-color: #ffffff;
+			}
+
+			ul {
+				list-style: none;
+			}
+
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+
+			.wrap {
+				max-width: 1100px;
+				margin: 0 auto;
+				padding: 0 15px;
+			}
+
+			.top-bar {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: 60px;
+			}
+
+			.top-left,
+			.top-right {
+				display: flex;
+				align-items: center;
+			}
+
+			.top-left {
+				gap: 30px;
+			}
+
+			.logo-text {
+				font-size: 22px;
+				letter-spacing: 4px;
+				color: #757575;
+			}
+
+			.logo-text span {
+				display: inline-block;
+				padding: 0 4px;
+				color: #ffffff;
+				background-color: #9f224e;
+			}
+
+			.logo-slogan {
+				display: block;
+				font-size: 10px;
+			}
+
+			.weather,
+			.date {
+				color: #4f4f4f;
+			}
+
+			.top-right > a,
+			.top-right > .drop {
+				padding: 0 10px;
+				color: #4f4f4f;
+				border-left: 1px solid #e5e5e5;
+			}
+
+			.top-right > a:first-child {
+				border-left: none;
+			}
+
+			.top-right a:hover,
+			.drop:hover > span {
+				color: #9f224e;
+			}
+
+			.search {
+				display: flex;
+				margin: 0 10px;
+				border: 1px solid #e5e5e5;
+			}
+
+			.search input {
+				width: 140px;
+				padding: 5px 8px;
+				border: none;
+			}
+
+			.search button {
+				padding: 0 8px;
+				background: none;
+				border: none;
+				cursor: pointer;
+			}
+
+			.avatar {
+				display: inline-block;
+				width: 26px;
+				height: 26px;
+				border-radius: 50%;
+				background-color: #bdbdbd;
+				vertical-align: middle;
+			}
+
+			.drop {
+				position: relative;
+				cursor: pointer;
+			}
+
+			.drop-list {
+				display: none;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				min-width: 160px;
+				padding: 5px 0;
+				background-color: #ffffff;
+				box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+				z-index: 20;
+			}
+
+			.drop-right .drop-list {
+				left: auto;
+				right: 0;
+			}
+
+			.drop:hover > .drop-list {
+				display: block;
+			}
+
+			.drop-list a {
+				display: block;
+				padding: 8px 15px;
+				white-space: nowrap;
+				color: #222222;
+			}
+
+			.drop-list a:hover {
+				background-color: #f7f7f7;
+			}
+
+			.nav {
+				position: relative;
+				border-top: 1px solid #e5e5e5;
+				border-bottom: 1px solid #e5e5e5;
+			}
+
+			.menu {
+				display: flex;
+				justify-content: space-between;
+				gap: 6px;
+				padding: 0 15px;
+				font-size: 13px;
+			}
+
+			.menu > li {
+				position: relative;
+			}
+
+			.menu > li > a {
+				display: block;
+				padding: 12px 0;
+				white-space: nowrap;
+			}
+
+			.menu > li:hover > a {
+				color: #9f224e;
+			}
+
+			.sub-menu {
+				display: none;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				min-width: 180px;
+				padding: 5px 0;
+				background-color: #ffffff;
+				border-top: 2px solid #9f224e;
+				box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+				z-index: 10;
+			}
+
+			.menu > li:hover > .sub-menu {
+				display: block;
+			}
+
+			.sub-menu a {
+				display: block;
+				padding: 8px 15px;
+				white-space: nowrap;
+			}
+
+			.sub-menu a:hover {
+				color: #9f224e;
+				background-color: #f7f7f7;
+			}
+
+			.menu .all a {
+				font-size: 16px;
+				padding: 10px 0;
+			}
+
+			.mega-menu {
+				display: none;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				max-width: 1100px;
+				margin: 0 auto;
+				padding: 20px;
+				background-color: #f7f7f7;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+				z-index: 10;
+			}
+
+			.mega-menu:target {
+				display: block;
+			}
+
+			.mega-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding-bottom: 10px;
+				margin-bottom: 20px;
+				border-bottom: 1px solid #cccccc;
+			}
+
+			.mega-title {
+				font-family: Georgia, serif;
+				font-size: 20px;
+			}
+
+			.close {
+				color: #076db6;
+				font-size: 15px;
+			}
+
+			.mega-body {
+				display: flex;
+				gap: 20px;
+			}
+
+			.mega-grid {
+				flex: 1;
+				display: grid;
+				grid-template-columns: repeat(6, 1fr);
+				gap: 25px 20px;
+			}
+
+			.mega-grid h3 {
+				font-size: 15px;
+				color: #9f224e;
+				margin-bottom: 10px;
+			}
+
+			.mega-grid li {
+				margin-bottom: 10px;
+			}
+
+			.mega-grid li a:hover,
+			.mega-side a:hover {
+				color: #9f224e;
+			}
+
+			.mega-side {
+				width: 170px;
+				padding-left: 15px;
+				border-left: 1px solid #cccccc;
+			}
+
+			.mega-side ul,
+			.mega-side .side-box {
+				padding-bottom: 15px;
+				margin-bottom: 15px;
+				border-bottom: 1px solid #dddddd;
+			}
+
+			.mega-side .side-box:last-child {
+				border-bottom: none;
+			}
+
+			.mega-side .big li {
+				font-size: 16px;
+				font-weight: bold;
+				margin-bottom: 12px;
+			}
+
+			.side-box p {
+				margin-bottom: 10px;
+			}
+
+			.side-box a {
+				display: block;
+				margin-bottom: 8px;
+				font-size: 13px;
+			}
+
+			@media (max-width: 1400px) {
+				.hide-small {
+					display: none;
+				}
+			}
+
+			@media (max-width: 768px) {
+				.top-bar {
+					height: auto;
+					padding: 10px 0;
+					flex-wrap: wrap;
+					gap: 10px;
+				}
+
+				.weather,
+				.date,
+				.search {
+					display: none;
+				}
+
+				.menu {
+					overflow-x: auto;
+					gap: 15px;
+				}
+
+				.mega-body {
+					flex-direction: column;
+				}
+
+				.mega-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+
+				.mega-side {
+					width: auto;
+					padding-left: 0;
+					border-left: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="wrap top-bar">
+				<div class="top-left">
+					<a href="#" class="logo">
+						<span class="logo-text">VN<span>E</span>XPRESS</span>
+						<span class="logo-slogan">Báo tiếng Việt nhiều người xem nhất</span>
+					</a>
+
+					<div class="weather drop">
+						<span>TP HCM &#9662; &nbsp; 29&deg;</span>
+						<ul class="drop-list">
+							<li><a href="#">Hà Nội</a></li>
+							<li><a href="#">TP HCM</a></li>
+							<li><a href="#">Đà Nẵng</a></li>
+							<li><a href="#">Hải Phòng</a></li>
+							<li><a href="#">Cần Thơ</a></li>
+						</ul>
+					</div>
+
+					<span class="date">Thứ bảy, 31/10/2026</span>
+				</div>
+
+				<div class="top-right">
+					<a href="#">Mới nhất</a>
+
+					<div class="drop">
+						<span>Tin theo khu vực</span>
+						<ul class="drop-list">
+							<li><a href="#">Hà Nội</a></li>
+							<li><a href="#">TP Hồ Chí Minh</a></li>
+						</ul>
+					</div>
+
+					<a href="#">International</a>
+
+					<form class="search" action="https://timkiem.vnexpress.net" target="_blank">
+						<input type="text" name="q" placeholder="Tìm kiếm" />
+						<button type="submit">&#128269;</button>
+					</form>
+
+					<div class="drop drop-right">
+						<span class="avatar"></span>
+						<ul class="drop-list">
+							<li><a href="#">Thông tin chung</a></li>
+							<li><a href="#">Ý kiến của bạn</a></li>
+							<li><a href="#">Tin đã lưu</a></li>
+							<li><a href="#">Tin đã xem</a></li>
+							<li><a href="#">Thoát</a></li>
+						</ul>
+					</div>
+
+					<a href="#">&#128276;</a>
+				</div>
+			</div>
+
+			<nav class="nav">
+				<ul class="menu">
+					<li><a href="#">&#8962;</a></li>
+					<li><a href="#">Mới nhất</a></li>
+					<li>
+						<a href="#">VnE-GO</a>
+						<ul class="sub-menu">
+							<li><a href="#">Discover</a></li>
+							<li><a href="#">Shorts</a></li>
+							<li><a href="#">Podcasts</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Thời sự</a>
+						<ul class="sub-menu">
+							<li><a href="#">Chính trị</a></li>
+							<li><a href="#">Kỷ nguyên mới</a></li>
+							<li><a href="#">Dân sinh</a></li>
+							<li><a href="#">Việc làm</a></li>
+							<li><a href="#">Giao thông</a></li>
+							<li><a href="#">Quỹ Hy vọng</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Thế giới</a>
+						<ul class="sub-menu">
+							<li><a href="#">Phân tích</a></li>
+							<li><a href="#">Tư liệu</a></li>
+							<li><a href="#">Quân sự</a></li>
+							<li><a href="#">Cuộc sống đó đây</a></li>
+							<li><a href="#">Người Việt 5 châu</a></li>
+							<li><a href="#">Bắc Mỹ</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Kinh doanh</a>
+						<ul class="sub-menu">
+							<li><a href="#">NetZero</a></li>
+							<li><a href="#">Quốc tế</a></li>
+							<li><a href="#">Doanh nghiệp</a></li>
+							<li><a href="#">Chứng khoán</a></li>
+							<li><a href="#">Ebank</a></li>
+							<li><a href="#">Vĩ mô</a></li>
+							<li><a href="#">Tiền của tôi</a></li>
+							<li><a href="#">Hàng hóa</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Khoa học công nghệ</a>
+						<ul class="sub-menu">
+							<li><a href="#">Hoạt động Bộ KH&amp;CN</a></li>
+							<li><a href="#">Chuyển đổi số</a></li>
+							<li><a href="#">Đổi mới sáng tạo</a></li>
+							<li><a href="#">AI</a></li>
+							<li><a href="#">Vũ trụ</a></li>
+							<li><a href="#">Thiết bị</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Góc nhìn</a>
+						<ul class="sub-menu">
+							<li><a href="#">Chính trị &amp; chính sách</a></li>
+							<li><a href="#">Y tế &amp; sức khỏe</a></li>
+							<li><a href="#">Kinh doanh &amp; quản trị</a></li>
+							<li><a href="#">Giáo dục &amp; tri thức</a></li>
+							<li><a href="#">Môi trường</a></li>
+						</ul>
+					</li>
+					<li class="hide-small"><a href="#">Spotlight</a></li>
+					<li>
+						<a href="#">Bất động sản</a>
+						<ul class="sub-menu">
+							<li><a href="#">Chính sách</a></li>
+							<li><a href="#">Thị trường</a></li>
+							<li><a href="#">Dự án</a></li>
+							<li><a href="#">Không gian sống</a></li>
+							<li><a href="#">Tư vấn</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Sức khỏe</a>
+						<ul class="sub-menu">
+							<li><a href="#">Tin tức</a></li>
+							<li><a href="#">Các bệnh</a></li>
+							<li><a href="#">Sống khỏe</a></li>
+							<li><a href="#">Vaccine</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Giải trí</a>
+						<ul class="sub-menu">
+							<li><a href="#">Giới sao</a></li>
+							<li><a href="#">Sách</a></li>
+							<li><a href="#">Phim</a></li>
+							<li><a href="#">Nhạc</a></li>
+							<li><a href="#">Thời trang</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Thể thao</a>
+						<ul class="sub-menu">
+							<li><a href="#">Bóng đá</a></li>
+							<li><a href="#">Lịch thi đấu</a></li>
+							<li><a href="#">Marathon</a></li>
+							<li><a href="#">Tennis</a></li>
+							<li><a href="#">Các môn khác</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Pháp luật</a>
+						<ul class="sub-menu">
+							<li><a href="#">Hồ sơ phá án</a></li>
+							<li><a href="#">Tư vấn</a></li>
+							<li><a href="#">Video</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Giáo dục</a>
+						<ul class="sub-menu">
+							<li><a href="#">Tin tức</a></li>
+							<li><a href="#">Tuyển sinh</a></li>
+							<li><a href="#">Chân dung</a></li>
+							<li><a href="#">Du học</a></li>
+							<li><a href="#">Học tiếng Anh</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Đời sống</a>
+						<ul class="sub-menu">
+							<li><a href="#">Nhịp sống</a></li>
+							<li><a href="#">Tổ ấm</a></li>
+							<li><a href="#">Bài học sống</a></li>
+							<li><a href="#">Cooking</a></li>
+							<li><a href="#">Tiêu dùng</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Xe</a>
+						<ul class="sub-menu">
+							<li><a href="#">Thị trường</a></li>
+							<li><a href="#">Xe điện</a></li>
+							<li><a href="#">Diễn đàn</a></li>
+							<li><a href="#">Cầm lái</a></li>
+							<li><a href="#">Thi bằng lái</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Du lịch</a>
+						<ul class="sub-menu">
+							<li><a href="#">Điểm đến</a></li>
+							<li><a href="#">Ẩm thực</a></li>
+							<li><a href="#">Dấu chân</a></li>
+							<li><a href="#">Tư vấn</a></li>
+							<li><a href="#">Cẩm nang</a></li>
+						</ul>
+					</li>
+					<li class="hide-small"><a href="#">Ảnh</a></li>
+					<li class="hide-small"><a href="#">Infographic</a></li>
+					<li>
+						<a href="#">Ý kiến</a>
+						<ul class="sub-menu">
+							<li><a href="#">Thời sự</a></li>
+							<li><a href="#">Đời sống</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Tâm sự</a>
+						<ul class="sub-menu">
+							<li><a href="#">Hẹn hò</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Thư giãn</a>
+						<ul class="sub-menu">
+							<li><a href="#">Cười</a></li>
+							<li><a href="#">Đố vui</a></li>
+							<li><a href="#">Chuyện lạ</a></li>
+							<li><a href="#">Crossword</a></li>
+							<li><a href="#">Thú cưng</a></li>
+						</ul>
+					</li>
+
+					<li class="all"><a href="#tat-ca">&#9776;</a></li>
+				</ul>
+
+				<div class="mega-menu" id="tat-ca">
+					<div class="mega-header">
+						<h2 class="mega-title">Tất cả chuyên mục</h2>
+						<a href="#" class="close">Đóng &#10005;</a>
+					</div>
+
+					<div class="mega-body">
+						<div class="mega-grid">
+							<div>
+								<h3>VnE-GO</h3>
+								<ul>
+									<li><a href="#">Discover</a></li>
+									<li><a href="#">Shorts</a></li>
+									<li><a href="#">Podcasts</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Thời sự</h3>
+								<ul>
+									<li><a href="#">Chính trị</a></li>
+									<li><a href="#">Kỷ nguyên mới</a></li>
+									<li><a href="#">Dân sinh</a></li>
+									<li><a href="#">Việc làm</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Thế giới</h3>
+								<ul>
+									<li><a href="#">Phân tích</a></li>
+									<li><a href="#">Tư liệu</a></li>
+									<li><a href="#">Quân sự</a></li>
+									<li><a href="#">Cuộc sống đó đây</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Kinh doanh</h3>
+								<ul>
+									<li><a href="#">NetZero</a></li>
+									<li><a href="#">Quốc tế</a></li>
+									<li><a href="#">Doanh nghiệp</a></li>
+									<li><a href="#">Chứng khoán</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Khoa học công nghệ</h3>
+								<ul>
+									<li><a href="#">Hoạt động Bộ KH&amp;CN</a></li>
+									<li><a href="#">Chuyển đổi số</a></li>
+									<li><a href="#">Đổi mới sáng tạo</a></li>
+									<li><a href="#">AI</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Góc nhìn</h3>
+								<ul>
+									<li><a href="#">Chính trị &amp; chính sách</a></li>
+									<li><a href="#">Y tế &amp; sức khỏe</a></li>
+									<li><a href="#">Kinh doanh &amp; quản trị</a></li>
+									<li><a href="#">Giáo dục &amp; tri thức</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Bất động sản</h3>
+								<ul>
+									<li><a href="#">Chính sách</a></li>
+									<li><a href="#">Thị trường</a></li>
+									<li><a href="#">Dự án</a></li>
+									<li><a href="#">Không gian sống</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Sức khỏe</h3>
+								<ul>
+									<li><a href="#">Tin tức</a></li>
+									<li><a href="#">Các bệnh</a></li>
+									<li><a href="#">Sống khỏe</a></li>
+									<li><a href="#">Vaccine</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Giải trí</h3>
+								<ul>
+									<li><a href="#">Giới sao</a></li>
+									<li><a href="#">Sách</a></li>
+									<li><a href="#">Video</a></li>
+									<li><a href="#">Phim</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Thể thao</h3>
+								<ul>
+									<li><a href="#">Bóng đá</a></li>
+									<li><a href="#">Lịch thi đấu</a></li>
+									<li><a href="#">Marathon</a></li>
+									<li><a href="#">Tennis</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Pháp luật</h3>
+								<ul>
+									<li><a href="#">Hồ sơ phá án</a></li>
+									<li><a href="#">Tư vấn</a></li>
+									<li><a href="#">Video</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Giáo dục</h3>
+								<ul>
+									<li><a href="#">Tin tức</a></li>
+									<li><a href="#">Tuyển sinh</a></li>
+									<li><a href="#">Chân dung</a></li>
+									<li><a href="#">Du học</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Đời sống</h3>
+								<ul>
+									<li><a href="#">Nhịp sống</a></li>
+									<li><a href="#">Tổ ấm</a></li>
+									<li><a href="#">Bài học sống</a></li>
+									<li><a href="#">Cooking</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Xe</h3>
+								<ul>
+									<li><a href="#">Mobility Awards 2026</a></li>
+									<li><a href="#">Thị trường</a></li>
+									<li><a href="#">Xe điện</a></li>
+									<li><a href="#">Diễn đàn</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Du lịch</h3>
+								<ul>
+									<li><a href="#">Điểm đến</a></li>
+									<li><a href="#">Ẩm thực</a></li>
+									<li><a href="#">Dấu chân</a></li>
+									<li><a href="#">Tư vấn</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Ý kiến</h3>
+								<ul>
+									<li><a href="#">Thời sự</a></li>
+									<li><a href="#">Đời sống</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Tâm sự</h3>
+								<ul>
+									<li><a href="#">Hẹn hò</a></li>
+								</ul>
+							</div>
+							<div>
+								<h3>Thư giãn</h3>
+								<ul>
+									<li><a href="#">Cười</a></li>
+									<li><a href="#">Đố vui</a></li>
+									<li><a href="#">Chuyện lạ</a></li>
+									<li><a href="#">Crossword</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="mega-side">
+							<ul class="big">
+								<li><a href="#">Spotlight</a></li>
+								<li><a href="#">Ảnh</a></li>
+								<li><a href="#">Infographics</a></li>
+							</ul>
+							<ul class="big">
+								<li><a href="#">Mới nhất</a></li>
+								<li><a href="#">Xem nhiều</a></li>
+								<li><a href="#">Tin nổi bật</a></li>
+								<li><a href="#">Lịch vạn niên</a></li>
+							</ul>
+							<div class="side-box">
+								<a href="#">Rao vặt</a>
+							</div>
+							<div class="side-box">
+								<p>Liên hệ</p>
+								<a href="#">&#9993; Tòa soạn</a>
+								<a href="#">&#9742; Quảng cáo</a>
+							</div>
+							<div class="side-box">
+								<p>Tải ứng dụng</p>
+								<a href="#">VnExpress</a>
+								<a href="#">International</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</header>
+	</body>
+</html>
